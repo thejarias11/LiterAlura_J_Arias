@@ -37,33 +37,45 @@ LiterAlura es una aplicación Java/Spring Boot que consume la API Gutendex para 
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/tuusuario/literalura.git
-cd literalura
+git clone https://github.com/thejarias11/LiterAlura_J_Arias.git
+cd LiterAlura_J_Arias
 ```
 
-### 2. Configurar PostgreSQL
+### 2. Requisitos
 
-Crea una base de datos llamada `literalura`:
+- Java JDK 17 o superior
+- Maven 3.9 o superior
+- PostgreSQL 16 (opcional - por defecto usa H2)
+
+### 3. Compilar el proyecto
 
 ```bash
-psql -U postgres
-CREATE DATABASE literalura;
+mvn clean compile
 ```
 
-### 3. Configurar archivo `application.properties`
+### 4. Ejecutar la aplicación
 
-Modifica `src/main/resources/application.properties` con tus credenciales de PostgreSQL:
+**Con H2 (por defecto, desarrollo rápido):**
+```bash
+mvn spring-boot:run
+```
 
+**Con PostgreSQL (producción):**
+1. Configura `src/main/resources/application.properties`:
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/literalura
 spring.datasource.username=postgres
 spring.datasource.password=tu_contraseña
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 ```
 
-### 4. Compilar y ejecutar
-
+2. Crea la base de datos:
 ```bash
-mvn clean install
+psql -U postgres -c "CREATE DATABASE literalura;"
+```
+
+3. Ejecuta:
+```bash
 mvn spring-boot:run
 ```
 
@@ -117,13 +129,27 @@ GET https://gutendex.com/books/?search=Harry%20Potter
 
 - [x] Configuración del entorno (Java, Maven, Spring, PostgreSQL)
 - [x] Creación de proyecto base
-- [ ] Implementar consumo de API Gutendex
-- [ ] Parsear respuestas JSON
-- [ ] Crear entidades (Libro, Autor)
-- [ ] Implementar repositorios JPA
-- [ ] Menú interactivo completo
-- [ ] Búsqueda y filtros
-- [ ] Pruebas finales
+- [x] Implementar consumo de API Gutendex
+- [x] Parsear respuestas JSON
+- [x] Crear entidades (Libro, Autor)
+- [x] Implementar repositorios JPA
+- [x] Menú interactivo completo
+- [x] Búsqueda y filtros básicos
+- [ ] Integración con PostgreSQL real
+- [ ] Pruebas exhaustivas
+- [ ] Documentación final
+
+## Base de Datos
+
+**Actual:** H2 (BD en memoria - desarrollo)  
+**Objetivo:** PostgreSQL 16 (producción)
+
+### Cambiar a PostgreSQL
+
+1. Edita `src/main/resources/application.properties`
+2. Descomenta la sección PostgreSQL
+3. Configura tu contraseña
+4. Ejecuta `mvn spring-boot:run`
 
 ## Autor
 
