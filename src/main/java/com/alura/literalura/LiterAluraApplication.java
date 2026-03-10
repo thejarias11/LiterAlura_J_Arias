@@ -88,7 +88,7 @@ public class LiterAluraApplication {
         System.out.println("1. Buscar libro por titulo");
         System.out.println("2. Listar todos los libros");
         System.out.println("3. Listar autores");
-        System.out.println("4. Buscar libros por fecha");
+        System.out.println("4. Buscar autores vivos en un año");
         System.out.println("5. Libros por idioma");
         System.out.println("6. Salir");
         System.out.println("=====================================");
