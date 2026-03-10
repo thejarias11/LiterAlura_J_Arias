@@ -13,12 +13,20 @@ import com.alura.literalura.model.*;
 import java.util.Scanner;
 import java.util.List;
 import java.util.Optional;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "com.alura.literalura.repository")
 public class LiterAluraApplication {
 
     public static void main(String[] args) {
+        try {
+            // Configurar UTF-8 para la salida
+            System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
+        } catch (Exception e) {
+            System.err.println("Error configurando UTF-8: " + e.getMessage());
+        }
         SpringApplication.run(LiterAluraApplication.class, args);
     }
 
