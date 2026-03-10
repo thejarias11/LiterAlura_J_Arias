@@ -6,18 +6,25 @@
 
 LiterAlura es una aplicación Java/Spring Boot que consume la API Gutendex para obtener información de libros y autores. La aplicación permite buscar libros, consultar autores, y filtrar por idioma y año de vida.
 
-## 📹 Video Demo
+## 📹 Video Demostración
 
-**[Añade tu video aquí](https://youtu.be/)** - Instrucciones en `GUIA_POSTGRESQL.md`
+**[VER VIDEO AQUÍ](https://youtu.be/PADsKHmXqPc)** - Demostración completa de todas las funcionalidades
 
-El video debería demostrar:
-- ✅ Búsqueda de libros en tiempo real (consumiendo Gutendex)
+El video demuestra:
+- ✅ Búsqueda de libros en tiempo real (consumiendo Gutendex API)
 - ✅ Persistencia automática en PostgreSQL
 - ✅ Listado de todos los libros guardados
-- ✅ Listado de autores con sus años
+- ✅ Listado de autores con sus años de vida
 - ✅ Filtrado de autores vivos en año específico
 - ✅ Filtrado de libros por idioma
-- ✅ Manejo de caracteres especiales (UTF-8 correcto)
+- ✅ Menú interactivo y manejo correcto de caracteres especiales (UTF-8)
+
+### Guiones de Ejecución y Grabación
+
+Para replicar la grabación del video:
+
+- **[EJECUTAR_Y_GRABAR.md](./EJECUTAR_Y_GRABAR.md)** - Guion completo en **ESPAÑOL** con instrucciones paso a paso y diálogos
+- **[EXECUTE_AND_RECORD.md](./EXECUTE_AND_RECORD.md)** - Guion completo en **INGLÉS** con instrucciones paso a paso y diálogos
 
 ## Características
 
@@ -45,150 +52,150 @@ El video debería demostrar:
 - PostgreSQL 16+
 - VS Code o IntelliJ IDEA
 
-## Instalación y Configuración
+## 🚀 INICIO RÁPIDO (Para Instructores)
 
-### 1. Clonar el repositorio
+### OPCIÓN 1: Ejecución Inmediata (Recomendado para pruebas rápidas)
 
 ```bash
+# 1. Clonar el repositorio
 git clone https://github.com/thejarias11/LiterAlura_J_Arias.git
 cd LiterAlura_J_Arias
+
+# 2. Ejecutar directamente (sin configuración adicional)
+mvn clean spring-boot:run
+
+# 3. Esperar a que aparezca: "Selecciona una opcion:"
+# 4. Probar las opciones del menú
 ```
 
-### 2. Requisitos
+**NOTA:** La primera ejecución descargará ~500MB de dependencias Maven. Esto es normal.
 
-- Java JDK 17 o superior
-- Maven 3.9 o superior
-- PostgreSQL 16 (opcional - por defecto usa H2)
+### OPCIÓN 2: Con PostgreSQL (Para usar base de datos POR DEFECTO)
 
-### 3. Compilar el proyecto
+Si tienes PostgreSQL 16 instalado:
 
 ```bash
-mvn clean compile
-```
-
-### 4. Ejecutar la aplicación
-
-**Con H2 (por defecto, desarrollo rápido):**
-```bash
-mvn spring-boot:run
-```
-
-**Con PostgreSQL (producción):**
-
-#### Opción A: Usar pgAdmin (GUI)
-1. Abre **pgAdmin** (buscalo en Windows)
-2. Conecta con el servidor PostgreSQL
-3. Crea una nueva base de datos llamada `literalura`
-4. Abre SQL Query y ejecuta:
-```sql
-ALTER USER postgres WITH PASSWORD 'tu_nueva_contraseña';
-```
-5. Guarda la contraseña en `application.properties`
-
-#### Opción B: Línea de comandos
-```bash
-"C:\Program Files\PostgreSQL\16\bin\psql.exe" -U postgres -c "ALTER USER postgres WITH PASSWORD 'tu_nueva_contraseña';"
+# 1. Crear base de datos
 "C:\Program Files\PostgreSQL\16\bin\psql.exe" -U postgres -c "CREATE DATABASE literalura;"
+
+# 2. Ejecutar la aplicación
+cd C:\Users\JESUS\OneDrive\Desktop\LiterAlura
+mvn clean spring-boot:run
 ```
 
-#### Opción C: Archivo de configuración
-Edita `src/main/resources/application-postgresql.properties`:
-```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/literalura
-spring.datasource.username=postgres
-spring.datasource.password=tu_contraseña
-spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
-spring.jpa.hibernate.ddl-auto=create-drop
+La aplicación automáticamente:
+- Crea las tablas (`libro` y `autor`)
+- Conecta a PostgreSQL
+- Persiste los datos
+
+### OPCIÓN 3: Paso a Paso Detallado (Para principiantes)
+
+Sigue el guion completo en:
+- **[EJECUTAR_Y_GRABAR.md](./EJECUTAR_Y_GRABAR.md)** (Español)
+- **[EXECUTE_AND_RECORD.md](./EXECUTE_AND_RECORD.md)** (Inglés)
+
+## ✅ Pruebas Rápidas (Para verificar que funciona)
+
+Después de ejecutar `mvn clean spring-boot:run`, prueba esto:
+
+### Prueba 1: Buscar un libro (Opción 1)
+```
+Selecciona una opcion: 1
+Titulo del libro: Pride and Prejudice
+[ENTER]
+
+Deberías ver:
+- Título: Pride and Prejudice
+- Autor: Jane Austen
+- Idioma: en
+- [OK] Guardado en la BD.
 ```
 
-Luego ejecuta con el perfil PostgreSQL:
-```bash
-mvn spring-boot:run -Dspring-boot.run.arguments="--spring.profiles.active=postgresql"
+### Prueba 2: Listar libros (Opción 2)
+```
+Selecciona una opcion: 2
+[ENTER]
+
+Deberías ver:
+- === LIBROS REGISTRADOS ===
+- Total: 1 libro(s)
+- [LIBRO] Pride and Prejudice
 ```
 
-## Uso
-
-Al ejecutar la aplicación con `mvn spring-boot:run`, se mostrará un menú interactivo:
-
+### Prueba 3: Listar autores (Opción 3)
 ```
-╔════════════════════════════════════╗
-║     📚 LITERALURA - MENÚ PRINCIPAL 📚    ║
-╠════════════════════════════════════╣
-║ 1. Buscar libro por título         ║
-║ 2. Listar todos los libros         ║
-║ 3. Listar autores                  ║
-║ 4. Listar autores vivos en año     ║
-║ 5. Listar libros por idioma        ║
-║ 6. Salir                           ║
-╚════════════════════════════════════╝
+Selecciona una opcion: 3
+[ENTER]
+
+Deberías ver:
+- === AUTORES REGISTRADOS ===
+- [AUTOR] Jane Austen
+- Periodo: 1775 - Vivo
 ```
 
-### Ejemplos de uso:
-
-**Opción 1 - Buscar libro:**
+### Prueba 4: Autores vivos en fecha (Opción 4)
 ```
-Ingrese el título del libro: Don Quixote
-```
-La aplicación busca en Gutendex y guarda en la BD si no existe.
+Selecciona una opcion: 4
+Ingresa la fecha (anio): 1800
+[ENTER]
 
-**Opción 2 - Listar libros:**
-Muestra todos los libros almacenados con título, autores e idioma.
-
-**Opción 3 - Listar autores:**
-Muestra todos los autores registrados con sus años de nacimiento/muerte.
-
-**Opción 4 - Autores vivos en año:**
-```
-Ingrese el año para obtener autores: 1800
+Deberías ver que Jane Austen estaba viva en 1800
 ```
 
-**Opción 5 - Filtrar por idioma:**
+### Prueba 5: Libros por idioma (Opción 5)
 ```
-Ingrese el código de idioma (en, es, fr, etc.): en
+Selecciona una opcion: 5
+Ingresa el codigo del idioma: en
+[ENTER]
+
+Deberías ver "Pride and Prejudice" en inglés
 ```
-Soporta cualquier idioma disponible en Gutendex.
 
-## ✅ Verificación de Funcionalidades
+## 📋 13 Requisitos Alura - ¡TODOS IMPLEMENTADOS!
 
-Para verificar que todo funciona correctamente:
+| # | Requisito | Estado | Donde verlo |
+|---|-----------|--------|---------|
+| 1 | API Gutendex | ✅ | Opción 1 - Buscar libro |
+| 2 | Guardar en PostgreSQL | ✅ | Opción 1 - Guardado automático |
+| 3 | Listar libros | ✅ | Opción 2 |
+| 4 | Listar autores | ✅ | Opción 3 |
+| 5 | Autores vivos en fecha | ✅ | Opción 4 |
+| 6 | Libros por idioma | ✅ | Opción 5 |
+| 7 | Menú interactivo | ✅ | 6 opciones disponibles |
+| 8 | Interfaz en consola | ✅ | Todo sin GUI |
+| 9 | HttpClient para API | ✅ | Código: `ConsultaGutendex.java` |
+| 10 | DTOs con Jackson | ✅ | Código: `LibroDTO.java`, `AutorDTO.java` |
+| 11 | Entidades JPA | ✅ | Código: `Libro.java`, `Autor.java` |
+| 12 | PostgreSQL + Hibernate | ✅ | Código: `application.properties` |
+| 13 | Búsqueda case-insensitive | ✅ | Código: `findByTituloIgnoreCase()` |
 
-1. **Compilar y ejecutar:**
-   ```bash
-   mvn clean compile
-   mvn spring-boot:run
-   ```
+## 👨‍🏫 Información para Instructores (Cómo Verificar la Implementación)
 
-2. **Probar cada opción del menú:**
-   - **Opción 1:** Busca un libro (ej: "Pride and Prejudice") → Debe aparecer en BD
-   - **Opción 2:** Verifica que aparezca el libro buscado
-   - **Opción 3:** Verifica que aparezca el/los autores
-   - **Opción 4:** Busca autores vivos en 1800 → Debe mostrar Jane Austen
-   - **Opción 5:** Filtra por idioma "en" → Debe mostrar libros en inglés
-   - **Opción 6:** Salir de la aplicación
+### Verificación de Requisitos por Código
 
-3. **Verificar UTF-8:**
-   - Busca un libro con caracteres especiales
-   - Verifica que NO aparezcan "?????" en la salida
-   - Ejemplo: "Les Misérables" debe verse correctamente
+**1. API Gutendex:**
+- Ubicación: `src/main/java/.../service/ConsultaGutendex.java`
+- Verifica: `private static final String URL_API = "https://gutendex.com/books?search=";`
 
-## Estructura del Proyecto
+**2. PostgreSQL + Hibernate:**
+- Ubicación: `src/main/resources/application.properties`
+- Verifica: `spring.datasource.url=jdbc:postgresql://localhost:5432/literalura`
 
-```
-LiterAlura/
-├── src/
-│   ├── main/
-│   │   ├── java/com/alura/literalura/
-│   │   │   ├── LiterAluraApplication.java (Clase principal)
-│   │   │   ├── model/                    (Entidades JPA)
-│   │   │   ├── repository/               (Repositorios JPA)
-│   │   │   └── service/                  (Lógica de negocio)
-│   │   └── resources/
-│   │       └── application.properties
-│   └── test/
-├── pom.xml (Dependencias Maven)
-├── .gitignore
-└── README.md
-```
+**3. DTOs con Jackson:**
+- Ubicación: `src/main/java/.../dto/LibroDTO.java`, `AutorDTO.java`
+- Verifica: Anotaciones `@JsonAlias` para mapeo de JSON
+
+**4. Entidades JPA:**
+- Ubicación: `src/main/java/.../model/Libro.java`, `Autor.java`
+- Verifica: Relaciones `@OneToMany` / `@ManyToOne`
+
+**5. Repositorios con Custom Queries:**
+- Ubicación: `src/main/java/.../repository/LibroRepository.java`
+- Verifica: `findByTituloIgnoreCase()`, `findByAutoresVivosEnFecha()`
+
+**6. Menú Interactivo:**
+- Ubicación: `src/main/java/.../LiterAluraApplication.java`
+- Verifica: `CommandLineRunner` con `Scanner` para 6 opciones
 
 ## API Gutendex
 
