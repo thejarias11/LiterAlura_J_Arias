@@ -88,7 +88,7 @@ public class LiterAluraApplication {
         System.out.println("1. Buscar libro por titulo");
         System.out.println("2. Listar todos los libros");
         System.out.println("3. Listar autores");
-        System.out.println("4. Autores vivos en un anio");
+        System.out.println("4. Buscar libros por fecha");
         System.out.println("5. Libros por idioma");
         System.out.println("6. Salir");
         System.out.println("=====================================");
@@ -147,7 +147,6 @@ public class LiterAluraApplication {
             }
             System.out.println();
         });
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
     }
 
     private void listarTodosAutores(AutorRepository autorRepository) {
@@ -171,13 +170,13 @@ public class LiterAluraApplication {
     }
 
     private void listarAutoresVivos(Scanner scanner, AutorRepository autorRepository) {
-        System.out.print("\nIngresa el anio para consultar: ");
+        System.out.print("\nIngresa la fecha para consultar: ");
         try {
             Integer anio = Integer.parseInt(scanner.nextLine().trim());
             List<Autor> autores = autorRepository.buscarAutoresVivosPorAnio(anio);
             
             if (autores.isEmpty()) {
-                System.out.println("\n[ERROR] No hay autores vivos en el anio " + anio);
+                System.out.println("\n[ERROR] No hay autores vivos en la fecha " + anio);
                 return;
             }
             
@@ -190,7 +189,7 @@ public class LiterAluraApplication {
                                  (autor.getAnioMuerte() != null ? autor.getAnioMuerte() : "Vivo"));
             });
         } catch (NumberFormatException e) {
-            System.out.println("[ERROR] Por favor ingresa un anio valido (numero).");
+            System.out.println("[ERROR] Por favor ingresa un Fecha valido (numero).");
         }
     }
 
