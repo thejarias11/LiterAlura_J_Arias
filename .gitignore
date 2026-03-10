@@ -24,3 +24,14 @@ build/
 # Environment
 .env
 *.log
+
+# Video scripts and recordings (local only)
+LIBRETO_VIDEO.md
+PASO_A_PASO_VIDEO.md
+CHECKLIST_GRABACION.md
+VIDEO_CHEAT_SHEET.md
+VIDEO_CHECKLIST_OPERACIONAL.md
+VIDEO_INSTRUCCIONES_FINALES.txt
+*.mp4
+*.avi
+*.mov
