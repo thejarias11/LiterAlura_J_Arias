@@ -8,13 +8,16 @@ LiterAlura es una aplicación Java/Spring Boot que consume la API Gutendex para 
 
 ## 📹 Video Demo
 
-**[VER DEMOSTRACIÓN](https://youtu.be/ejemplo)** - Aquí va el enlace a tu video demo
+**[Añade tu video aquí](https://youtu.be/)** - Instrucciones en `GUIA_POSTGRESQL.md`
 
-En el video se muestra:
-- ✅ Búsqueda de libros en tiempo real
-- ✅ Persistencia en base de datos
-- ✅ Listado de libros y autores
-- ✅ Filtros por idioma y año de vida
+El video debería demostrar:
+- ✅ Búsqueda de libros en tiempo real (consumiendo Gutendex)
+- ✅ Persistencia automática en PostgreSQL
+- ✅ Listado de todos los libros guardados
+- ✅ Listado de autores con sus años
+- ✅ Filtrado de autores vivos en año específico
+- ✅ Filtrado de libros por idioma
+- ✅ Manejo de caracteres especiales (UTF-8 correcto)
 
 ## Características
 
@@ -105,17 +108,68 @@ mvn spring-boot:run -Dspring-boot.run.arguments="--spring.profiles.active=postgr
 
 ## Uso
 
-Al ejecutar la aplicación, se mostrará un menú interactivo con las siguientes opciones:
+Al ejecutar la aplicación con `mvn spring-boot:run`, se mostrará un menú interactivo:
 
 ```
---- MENÚ PRINCIPAL ---
-1. Buscar libro por título
-2. Listar todos los libros
-3. Listar autores
-4. Listar autores vivos en un año
-5. Listar libros por idioma
-6. Salir
+╔════════════════════════════════════╗
+║     📚 LITERALURA - MENÚ PRINCIPAL 📚    ║
+╠════════════════════════════════════╣
+║ 1. Buscar libro por título         ║
+║ 2. Listar todos los libros         ║
+║ 3. Listar autores                  ║
+║ 4. Listar autores vivos en año     ║
+║ 5. Listar libros por idioma        ║
+║ 6. Salir                           ║
+╚════════════════════════════════════╝
 ```
+
+### Ejemplos de uso:
+
+**Opción 1 - Buscar libro:**
+```
+Ingrese el título del libro: Don Quixote
+```
+La aplicación busca en Gutendex y guarda en la BD si no existe.
+
+**Opción 2 - Listar libros:**
+Muestra todos los libros almacenados con título, autores e idioma.
+
+**Opción 3 - Listar autores:**
+Muestra todos los autores registrados con sus años de nacimiento/muerte.
+
+**Opción 4 - Autores vivos en año:**
+```
+Ingrese el año para obtener autores: 1800
+```
+
+**Opción 5 - Filtrar por idioma:**
+```
+Ingrese el código de idioma (en, es, fr, etc.): en
+```
+Soporta cualquier idioma disponible en Gutendex.
+
+## ✅ Verificación de Funcionalidades
+
+Para verificar que todo funciona correctamente:
+
+1. **Compilar y ejecutar:**
+   ```bash
+   mvn clean compile
+   mvn spring-boot:run
+   ```
+
+2. **Probar cada opción del menú:**
+   - **Opción 1:** Busca un libro (ej: "Pride and Prejudice") → Debe aparecer en BD
+   - **Opción 2:** Verifica que aparezca el libro buscado
+   - **Opción 3:** Verifica que aparezca el/los autores
+   - **Opción 4:** Busca autores vivos en 1800 → Debe mostrar Jane Austen
+   - **Opción 5:** Filtra por idioma "en" → Debe mostrar libros en inglés
+   - **Opción 6:** Salir de la aplicación
+
+3. **Verificar UTF-8:**
+   - Busca un libro con caracteres especiales
+   - Verifica que NO aparezcan "?????" en la salida
+   - Ejemplo: "Les Misérables" debe verse correctamente
 
 ## Estructura del Proyecto
 
@@ -157,27 +211,50 @@ GET https://gutendex.com/books/?search=Harry%20Potter
 - [x] Parsear respuestas JSON
 - [x] Crear entidades (Libro, Autor)
 - [x] Implementar repositorios JPA
-- [x] Menú interactivo completo
-- [x] Búsqueda y filtros básicos
-- [ ] Integración con PostgreSQL real
-- [ ] Pruebas exhaustivas
-- [ ] Documentación final
+- [x] Menú interactivo completo (6 opciones funcionales)
+- [x] Búsqueda y filtros por idioma
+- [x] Integración con PostgreSQL 16
+- [x] Almacenamiento persistente en base de datos
+- [x] Mejora de formato de salida y codificación UTF-8
+- [x] Pruebas exhaustivas de todas las funcionalidades
+- [x] Documentación completa
 
 ## Base de Datos
 
-**Actual:** H2 (BD en memoria - desarrollo)  
-**Objetivo:** PostgreSQL 16 (producción)
+**Actual:** PostgreSQL 16 (producción)  
+**Alternativa:** H2 (desarrollo local - descomentar en application.properties)
 
-### Cambiar a PostgreSQL
+### Configuración PostgreSQL
 
-1. Edita `src/main/resources/application.properties`
-2. Descomenta la sección PostgreSQL
-3. Configura tu contraseña
-4. Ejecuta `mvn spring-boot:run`
+La aplicación ya viene configurada con PostgreSQL. Solo necesitas:
+
+1. Instalar PostgreSQL 16 o superior
+2. Crear la base de datos `literalura`:
+   ```sql
+   CREATE DATABASE literalura;
+   ```
+3. Configurar las credenciales en `src/main/resources/application.properties`:
+   ```properties
+   spring.datasource.url=jdbc:postgresql://localhost:5432/literalura
+   spring.datasource.username=postgres
+   spring.datasource.password=tu_contraseña
+   spring.jpa.hibernate.ddl-auto=create-drop
+   ```
+4. Las tablas se crean automáticamente al ejecutar la aplicación
 
 ## Autor
 
 Desarrollado como parte del Challenge Alura + Oracle One.
+
+## Solución de Problemas
+
+| Problema | Solución |
+|----------|----------|
+| PostgreSQL no conecta | Verifica que PostgreSQL está corriendo y credenciales en application.properties |
+| Caracteres como "?????" en salida | Ya está solucionado con UTF-8 encoding en desde la versión actual |
+| Tabla no existe en BD | Normal en primer run - Hibernate la crea automáticamente |
+| Repositorio no encontrado | Verifica anotación @EnableJpaRepositories en clase principal |
+| API Gutendex no responde | Puede estar fuera de servicio - Intenta en unos minutos |
 
 ## Licencia
 
