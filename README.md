@@ -6,6 +6,16 @@
 
 LiterAlura es una aplicación Java/Spring Boot que consume la API Gutendex para obtener información de libros y autores. La aplicación permite buscar libros, consultar autores, y filtrar por idioma y año de vida.
 
+## 📹 Video Demo
+
+**[VER DEMOSTRACIÓN](https://youtu.be/ejemplo)** - Aquí va el enlace a tu video demo
+
+En el video se muestra:
+- ✅ Búsqueda de libros en tiempo real
+- ✅ Persistencia en base de datos
+- ✅ Listado de libros y autores
+- ✅ Filtros por idioma y año de vida
+
 ## Características
 
 ✅ Búsqueda de libros por título  
@@ -13,7 +23,7 @@ LiterAlura es una aplicación Java/Spring Boot que consume la API Gutendex para 
 ✅ Listar autores  
 ✅ Consultar autores vivos en un año específico  
 ✅ Filtrar libros por idioma  
-✅ Persistencia en PostgreSQL  
+✅ Persistencia en base de datos (H2 / PostgreSQL)  
 
 ## Tecnologías Utilizadas
 
@@ -61,22 +71,36 @@ mvn spring-boot:run
 ```
 
 **Con PostgreSQL (producción):**
-1. Configura `src/main/resources/application.properties`:
+
+#### Opción A: Usar pgAdmin (GUI)
+1. Abre **pgAdmin** (buscalo en Windows)
+2. Conecta con el servidor PostgreSQL
+3. Crea una nueva base de datos llamada `literalura`
+4. Abre SQL Query y ejecuta:
+```sql
+ALTER USER postgres WITH PASSWORD 'tu_nueva_contraseña';
+```
+5. Guarda la contraseña en `application.properties`
+
+#### Opción B: Línea de comandos
+```bash
+"C:\Program Files\PostgreSQL\16\bin\psql.exe" -U postgres -c "ALTER USER postgres WITH PASSWORD 'tu_nueva_contraseña';"
+"C:\Program Files\PostgreSQL\16\bin\psql.exe" -U postgres -c "CREATE DATABASE literalura;"
+```
+
+#### Opción C: Archivo de configuración
+Edita `src/main/resources/application-postgresql.properties`:
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/literalura
 spring.datasource.username=postgres
 spring.datasource.password=tu_contraseña
 spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto=create-drop
 ```
 
-2. Crea la base de datos:
+Luego ejecuta con el perfil PostgreSQL:
 ```bash
-psql -U postgres -c "CREATE DATABASE literalura;"
-```
-
-3. Ejecuta:
-```bash
-mvn spring-boot:run
+mvn spring-boot:run -Dspring-boot.run.arguments="--spring.profiles.active=postgresql"
 ```
 
 ## Uso
@@ -158,3 +182,10 @@ Desarrollado como parte del Challenge Alura + Oracle One.
 ## Licencia
 
 MIT License
+
+---
+
+## 📚 Guías Adicionales
+
+- **[📹 Cómo grabar y subir tu Video Demo](./GUIA_POSTGRESQL.md)** - Paso a paso
+- **[🔧 Configurar PostgreSQL completo](./GUIA_POSTGRESQL.md)** - Guía detallada con pgAdmin
