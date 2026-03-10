@@ -233,6 +233,210 @@ LISTO! Video grabado.
 
 
 ═════════════════════════════════════════════════════════════════════════════
+🎤 SCRIPT - LO QUE DEBES DECIR (DIÁLOGOS PARA VIDEO)
+═════════════════════════════════════════════════════════════════════════════
+
+SECCIÓN 1: INTRODUCCIÓN
+───────────────────────────────────────────────────────────────────────────
+
+"Hola! Bienvenido. Te presento LITERALURA, una aplicación desarrollada en 
+Spring Boot 3 que integra la API de Gutendex para buscar, guardar y gestionar 
+libros de dominio público. 
+
+Toda la información se almacena en una base de datos PostgreSQL, permitiéndote 
+buscar libros y autores de forma interactiva desde la consola.
+
+Voy a mostración los 6 menús principales y cada uno de los 13 requisitos 
+Alura implementados. ¡Empecemos!"
+
+
+SECCIÓN 2: ANTES DE EJECUTAR
+───────────────────────────────────────────────────────────────────────────
+
+"Primero, voy a abrir PowerShell y navegar al proyecto. Ejecuto el comando 
+Maven para iniciarel servidor. Esto descargará todas las dependencias necesarias 
+y levantará la aplicación..."
+
+[MOSTRAR: mvn clean spring-boot:run en PowerShell]
+[ESPERAR: A que salga "Selecciona una opcion:"]
+
+
+SECCIÓN 3: OPCIÓN 1 - BUSCAR LIBRO
+───────────────────────────────────────────────────────────────────────────
+
+"Ahora selecciono la opción 1 para BUSCAR UN LIBRO. La aplicación se conecta 
+a la API de Gutendex y me pide el título. Voy a buscar 'Don Quijote', un 
+clásico de la literatura española."
+
+[ESCRIBIR: 1, ENTER]
+[ESCRIBIR: Don Quijote, ENTER]
+
+"Como ves, la aplicación encontró el libro en la API de Gutendex. Me muestra:
+- El título: Don Quijote
+- El idioma: 'es' (español)
+- La cantidad de descargas: 13446
+- El autor: Miguel de Cervantes Saavedra con sus fechas de vida (1547-1616)
+
+El libro se guardó automáticamente en la base de datos PostgreSQL."
+
+[ENTER para continuar]
+
+
+SECCIÓN 4: OPCIÓN 2 - LISTAR LIBROS
+───────────────────────────────────────────────────────────────────────────
+
+"Ahora selecciono la opción 2 para VER TODOS LOS LIBROS guardados en la base 
+de datos."
+
+[ESCRIBIR: 2, ENTER]
+
+"Perfecto. Aquí vemos todos los libros registrados. El sistema me muestra:
+- El total de libros guardados
+- El título de cada libro
+- El idioma
+- Las descargas
+- El autor asociado
+
+Este requisito Alura demanda listar todos los libros - mira, aquí está 
+implementado y funciona correctamente."
+
+[ENTER para continuar]
+
+
+SECCIÓN 5: OPCIÓN 3 - LISTAR AUTORES
+───────────────────────────────────────────────────────────────────────────
+
+"Opción 3 - LISTAR AUTORES. Voy a ver todos los autores registrados en el 
+sistema."
+
+[ESCRIBIR: 3, ENTER]
+
+"Excelente. Aquí están los autores registrados. El sistema muestra:
+- El nombre completo del autor
+- Su período vital (año de nacimiento y fallecimiento)
+
+Fíjate que para el autor que acaba de buscar, aparece su período: 1547 hasta 
+1616. Esto es información traída desde la API de Gutendex."
+
+[ENTER para continuar]
+
+
+SECCIÓN 6: OPCIÓN 4 - AUTORES VIVOS EN UNA FECHA
+───────────────────────────────────────────────────────────────────────────
+
+"Opción 4 - BUSCAR AUTORES VIVOS EN UNA FECHA ESPECÍFICA. Este es uno de los 
+requisitos Alura más interesantes. 
+
+La aplicación me permite ingresar un año y me muestra solo los autores que 
+estaban vivos en ese momento. Voy a buscar autores vivos en el año 1600."
+
+[ESCRIBIR: 4, ENTER]
+[ESCRIBIR: 1600, ENTER]
+
+"Mira los resultados. La aplicación encontró que Miguel de Cervantes estaba 
+vivo en 1600:
+- Nació en 1547
+- Murió en 1616
+
+Por lo tanto, en 1600 él estaba vivo. Este filtro usa lógica de rango de 
+fechas implementada en la base de datos."
+
+[ENTER para continuar]
+
+
+SECCIÓN 7: OPCIÓN 5 - LIBROS POR IDIOMA
+───────────────────────────────────────────────────────────────────────────
+
+"Opción 5 - BUSCAR LIBROS POR IDIOMA. Otro requisito Alura importante: filtrar 
+libros según el idioma.
+
+Aquí puedo ver todos los idiomas disponibles en los libros guardados. Voy a 
+buscar libros en ESPAÑOL (es)."
+
+[ESCRIBIR: 5, ENTER]
+[ESCRIBIR: es, ENTER]
+
+"Perfecto! La aplicación muestra:
+- Todos los idiomas disponibles en el sistema
+- Y luego filtra solo los libros en español
+
+Don Quijote aparece aquí porque es un libro en español. Si tuviera más libros 
+guardados en otros idiomas (en, fr, de, pt), podría filtrar por cada uno."
+
+[ENTER para continuar]
+
+
+SECCIÓN 8: OPCIÓN 6 - SALIR
+───────────────────────────────────────────────────────────────────────────
+
+"Finalmente, la opción 6 para SALIR de la aplicación. Voy a seleccionarla."
+
+[ESCRIBIR: 6, ENTER]
+
+"La aplicación muestra 'Hasta luego!' y se cierra. El programa finalizó 
+correctamente."
+
+
+SECCIÓN 9: RESUMEN DE REQUISITOS ALURA
+───────────────────────────────────────────────────────────────────────────
+
+"Ahora quiero hacer un resumen de los 13 requisitos Alura que implementé:
+
+1. ✅ API GUTENDEX - La aplicación se conecta a la API pública de Gutendex 
+   para buscar libros.
+
+2. ✅ GUARDAR EN POSTGRESQL - Todos los libros buscados se guardan automáticamente 
+   en una base de datos PostgreSQL.
+
+3. ✅ LISTAR LIBROS - Opción del menú para ver todos los libros guardados.
+
+4. ✅ LISTAR AUTORES - Opción del menú para ver todos los autores registrados.
+
+5. ✅ AUTORES VIVOS EN FECHA - Opción 4 que filtra autores por rango de fechas.
+
+6. ✅ LIBROS POR IDIOMA - Opción 5 que permite filtrar libros por idioma.
+
+7. ✅ MENÚ INTERACTIVO - 6 opciones interactivas en la consola.
+
+8. ✅ INTERFAZ EN CONSOLA - Todo se ejecuta desde la terminal, sin GUI.
+
+9. ✅ HTTPCLIENT - Se usa HttpClient de Java para las peticiones a Gutendex.
+
+10. ✅ DTOs CON JACKSON - Los datos de la API se deserializan con Jackson 
+    usando anotaciones @JsonAlias.
+
+11. ✅ ENTIDADES JPA - Clases Libro y Autor con relaciones OneToMany/ManyToOne.
+
+12. ✅ HIBERNATE Y POSTGRESQL - Se usa Hibernate como ORM y PostgreSQL como 
+    base de datos.
+
+13. ✅ BÚSQUEDA CASE-INSENSITIVE - Las búsquedas de libros ignoran mayúsculas 
+    y minúsculas.
+
+Todos y cada uno de los requisitos están implementados, probados y funcionando 
+correctamente."
+
+
+SECCIÓN 10: CIERRE
+───────────────────────────────────────────────────────────────────────────
+
+"Eso es todo! LITERALURA es una aplicación completa que:
+
+- Se conecta a una API externa en tiempo real
+- Gestiona datos con PostgreSQL
+- Proporciona filtrados avanzados
+- Tiene una interfaz interactiva y amigable
+
+El código está limpio, bien estructurado y cumple con todos los estándares 
+de una aplicación Spring Boot profesional.
+
+Si tienes preguntas o quieres ver otra funcionalidad, aquí está el repositorio 
+en GitHub: https://github.com/thejarias11/LiterAlura_J_Arias
+
+¡Gracias por ver! Nos vemos."
+
+
+═════════════════════════════════════════════════════════════════════════════
 ✨ RESUMEN ULTRA CORTO
 ═════════════════════════════════════════════════════════════════════════════
 
