@@ -219,8 +219,14 @@ public class LiterAluraApplication {
     private void mostrarDetallesLibroDTO(LibroDTO libro) {
         System.out.println("\n=== DETALLES DEL LIBRO ===");
         System.out.println("Titulo: " + (libro.getTitulo() != null ? libro.getTitulo() : "N/A"));
-        System.out.println("Idioma: " + (libro.getIdiomas() != null && !libro.getIdiomas().isEmpty() ? libro.getIdiomas().get(0) : "N/A"));
-        System.out.println("Descargas: " + (libro.getNumeroDescargas() != null ? libro.getNumeroDescargas() : "N/A"));
+        
+        String idiomas = libro.getIdiomas() != null && !libro.getIdiomas().isEmpty() 
+                        ? libro.getIdiomas().get(0) 
+                        : "N/A";
+        System.out.println("Idioma: " + idiomas);
+        
+        Integer descargas = libro.getNumeroDescargas() != null ? libro.getNumeroDescargas() : 0;
+        System.out.println("Descargas: " + String.format("%,d", descargas));
         
         if (libro.getAutores() != null && !libro.getAutores().isEmpty()) {
             System.out.println("\nAutor(es):");
@@ -228,7 +234,7 @@ public class LiterAluraApplication {
                 String nacimiento = a.getAnioNacimiento() != null ? a.getAnioNacimiento().toString() : "?";
                 String muerte = a.getAnioMuerte() != null ? a.getAnioMuerte().toString() : "Vivo";
                 System.out.println("  - " + (a.getNombre() != null ? a.getNombre() : "N/A") + 
-                                 " (" + nacimiento + "-" + muerte + ")");
+                                 " (" + nacimiento + " - " + muerte + ")");
             });
         }
         System.out.println("===========================");
