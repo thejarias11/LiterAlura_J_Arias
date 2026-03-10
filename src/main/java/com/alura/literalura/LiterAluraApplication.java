@@ -37,14 +37,14 @@ public class LiterAluraApplication {
             ConsultaGutendex consulta = new ConsultaGutendex();
             boolean salir = false;
 
-            System.out.println("\n╔════════════════════════════════════╗");
-            System.out.println("║   ¡BIENVENIDO A LITERALURA!         ║");
-            System.out.println("║  Catálogo de Libros - Alura + Oracle ║");
-            System.out.println("╚════════════════════════════════════╝\n");
+            System.out.println("\n====================================");
+            System.out.println("   BIENVENIDO A LITERALURA!");
+            System.out.println("  Catalogo de Libros - Alura + Oracle");
+            System.out.println("====================================\n");
 
             while (!salir) {
                 mostrarMenu();
-                System.out.print("\nSelecciona una opción: ");
+                System.out.print("\nSelecciona una opcion: ");
                 String opcion = scanner.nextLine().trim();
 
                 switch (opcion) {
@@ -64,11 +64,11 @@ public class LiterAluraApplication {
                         listarLibrosPorIdioma(scanner, libroRepository);
                         break;
                     case "6":
-                        System.out.println("\n¡Hasta luego! 👋");
+                        System.out.println("\n[SALIENDO] Hasta luego!");
                         salir = true;
                         break;
                     default:
-                        System.out.println("❌ Opción no válida. Intenta de nuevo.");
+                        System.out.println("[ERROR] Opcion no valida. Intenta de nuevo.");
                 }
                 if (!salir) {
                     System.out.print("\nPresiona ENTER para continuar...");
@@ -81,43 +81,44 @@ public class LiterAluraApplication {
     }
 
     private void mostrarMenu() {
-        System.out.println("╔════════════════════════════════════╗");
-        System.out.println("║        --- MENÚ PRINCIPAL ---       ║");
-        System.out.println("╠════════════════════════════════════╣");
-        System.out.println("║ 1. 🔍 Buscar libro por título      ║");
-        System.out.println("║ 2. 📚 Listar todos los libros      ║");
-        System.out.println("║ 3. 👤 Listar autores               ║");
-        System.out.println("║ 4. 📅 Autores vivos en un año      ║");
-        System.out.println("║ 5. 🌐 Libros por idioma            ║");
-        System.out.println("║ 6. 🚪 Salir                        ║");
-        System.out.println("╚════════════════════════════════════╝");
+        System.out.println();
+        System.out.println("=====================================");
+        System.out.println("      MENU PRINCIPAL");
+        System.out.println("=====================================");
+        System.out.println("1. Buscar libro por titulo");
+        System.out.println("2. Listar todos los libros");
+        System.out.println("3. Listar autores");
+        System.out.println("4. Autores vivos en un anio");
+        System.out.println("5. Libros por idioma");
+        System.out.println("6. Salir");
+        System.out.println("=====================================");
     }
 
     private void buscarLibro(Scanner scanner, ConsultaGutendex consulta, 
                             LibroRepository libroRepository, AutorRepository autorRepository) {
-        System.out.print("\nEscribe el título del libro a buscar: ");
+        System.out.print("\nEscribe el titulo del libro a buscar: ");
         String titulo = scanner.nextLine().trim();
 
-        System.out.println("\n🔍 Buscando en Gutendex...");
+        System.out.println("\n[BUSCANDO] Buscando en Gutendex...");
         RespuestaGutendex respuesta = consulta.buscarLibros(titulo);
         
         if (respuesta != null && respuesta.getResults() != null && !respuesta.getResults().isEmpty()) {
             LibroDTO libroDTO = respuesta.getResults().get(0);
-            System.out.println("\n✅ ¡Libro encontrado!");
+            System.out.println("\n[OK] Libro encontrado!");
             mostrarDetallesLibroDTO(libroDTO);
             
             // Verificar si ya existe en la BD
             Optional<Libro> libroExistente = libroRepository.findByTituloIgnoreCase(libroDTO.getTitulo());
             if (libroExistente.isPresent()) {
-                System.out.println("⚠️  Este libro ya estaba en la base de datos.");
+                System.out.println("[ADVERTENCIA] Este libro ya estaba en la base de datos.");
             } else {
                 Libro libroGuardado = ConversionDatos.convertirDTOaLibro(libroDTO);
                 libroRepository.save(libroGuardado);
-                System.out.println("✅ Libro guardado exitosamente en la base de datos.");
+                System.out.println("[OK] Libro guardado exitosamente en la base de datos.");
             }
         } else {
-            System.out.println("\n❌ No se encontraron libros con ese título en Gutendex.");
-            System.out.println("💡 Intenta con otro título o verifica la ortografía.");
+            System.out.println("\n[ERROR] No se encontraron libros con ese titulo en Gutendex.");
+            System.out.println("[TIP] Intenta con otro titulo o verifica la ortografia.");
         }
     }
 
@@ -125,21 +126,20 @@ public class LiterAluraApplication {
         List<Libro> libros = libroRepository.findAll();
         
         if (libros.isEmpty()) {
-            System.out.println("\n❌ No hay libros en la base de datos.");
+            System.out.println("\n[ERROR] No hay libros en la base de datos.");
             return;
         }
         
-        System.out.println("\n📚 LIBROS REGISTRADOS EN LA BASE DE DATOS");
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("\n=== LIBROS REGISTRADOS EN LA BASE DE DATOS ===");
         System.out.println("Total: " + libros.size() + " libro(s)\n");
         
         libros.forEach(libro -> {
-            System.out.println("📖 " + (libro.getTitulo() != null ? libro.getTitulo() : "N/A"));
-            System.out.println("   Idioma: " + (libro.getIdiomas() != null ? libro.getIdiomas() : "N/A"));
-            System.out.println("   Descargas: " + (libro.getNumeroDescargas() != null ? libro.getNumeroDescargas() : "N/A"));
+            System.out.println("[LIBRO] " + (libro.getTitulo() != null ? libro.getTitulo() : "N/A"));
+            System.out.println("        Idioma: " + (libro.getIdiomas() != null ? libro.getIdiomas() : "N/A"));
+            System.out.println("        Descargas: " + (libro.getNumeroDescargas() != null ? libro.getNumeroDescargas() : "N/A"));
             
             if (libro.getAutores() != null && !libro.getAutores().isEmpty()) {
-                System.out.print("   Autor: ");
+                System.out.print("        Autor: ");
                 libro.getAutores().forEach(a -> 
                     System.out.print((a.getNombre() != null ? a.getNombre() : "N/A"))
                 );
@@ -154,75 +154,71 @@ public class LiterAluraApplication {
         List<Autor> autores = autorRepository.findAll();
         
         if (autores.isEmpty()) {
-            System.out.println("\n❌ No hay autores en la base de datos.");
+            System.out.println("\n[ERROR] No hay autores en la base de datos.");
             return;
         }
         
-        System.out.println("\n👥 AUTORES REGISTRADOS");
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("\n=== AUTORES REGISTRADOS ===");
         System.out.println("Total: " + autores.size() + " autor(es)\n");
         
         autores.forEach(autor -> {
-            System.out.println("👤 " + (autor.getNombre() != null ? autor.getNombre() : "N/A"));
+            System.out.println("[AUTOR] " + (autor.getNombre() != null ? autor.getNombre() : "N/A"));
             String nacimiento = autor.getAnioNacimiento() != null ? autor.getAnioNacimiento().toString() : "?";
             String muerte = autor.getAnioMuerte() != null ? autor.getAnioMuerte().toString() : "Vivo";
-            System.out.println("   Periodo: " + nacimiento + " - " + muerte);
+            System.out.println("        Periodo: " + nacimiento + " - " + muerte);
             System.out.println();
         });
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
     }
 
     private void listarAutoresVivos(Scanner scanner, AutorRepository autorRepository) {
-        System.out.print("\nIngresa el año para consultar: ");
+        System.out.print("\nIngresa el anio para consultar: ");
         try {
             Integer anio = Integer.parseInt(scanner.nextLine().trim());
             List<Autor> autores = autorRepository.buscarAutoresVivosPorAnio(anio);
             
             if (autores.isEmpty()) {
-                System.out.println("\n❌ No hay autores vivos en el año " + anio);
+                System.out.println("\n[ERROR] No hay autores vivos en el anio " + anio);
                 return;
             }
             
-            System.out.println("\n✅ AUTORES VIVOS EN " + anio + ":");
-            System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            System.out.println("\n[OK] AUTORES VIVOS EN " + anio + ":");
+            System.out.println("=====================================");
             autores.forEach(autor -> {
-                System.out.println("\n👤 " + autor.getNombre());
-                System.out.println("   Nacimiento: " + autor.getAnioNacimiento());
-                System.out.println("   Fallecimiento: " + 
+                System.out.println("\n[AUTOR] " + autor.getNombre());
+                System.out.println("        Nacimiento: " + autor.getAnioNacimiento());
+                System.out.println("        Fallecimiento: " + 
                                  (autor.getAnioMuerte() != null ? autor.getAnioMuerte() : "Vivo"));
             });
         } catch (NumberFormatException e) {
-            System.out.println("❌ Por favor ingresa un año válido (número).");
+            System.out.println("[ERROR] Por favor ingresa un anio valido (numero).");
         }
     }
 
     private void listarLibrosPorIdioma(Scanner scanner, LibroRepository libroRepository) {
-        System.out.println("\nIdiomas disponibles: es (español), en (inglés), fr (francés), de (alemán), pt (portugués)");
-        System.out.print("Ingresa el código del idioma: ");
+        System.out.println("\nIdiomas disponibles: es (espanol), en (ingles), fr (frances), de (aleman), pt (portugues)");
+        System.out.print("Ingresa el codigo del idioma: ");
         String idioma = scanner.nextLine().trim().toLowerCase();
         
         List<Libro> libros = libroRepository.findByIdiomasContainsIgnoreCase(idioma);
         
         if (libros.isEmpty()) {
-            System.out.println("\n❌ No hay libros en ese idioma.");
+            System.out.println("\n[ERROR] No hay libros en ese idioma.");
             return;
         }
         
-        System.out.println("\n📚 LIBROS EN " + idioma.toUpperCase() + ":");
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("\n=== LIBROS EN " + idioma.toUpperCase() + " ===");
         
         libros.forEach(libro -> {
-            System.out.println("\n📖 " + libro.getTitulo());
-            System.out.println("   Descargas: " + libro.getNumeroDescargas());
+            System.out.println("\n[LIBRO] " + libro.getTitulo());
+            System.out.println("        Descargas: " + libro.getNumeroDescargas());
         });
         
-        System.out.println("\n\n📊 Total de libros: " + libros.size());
+        System.out.println("\n[RESUMEN] Total de libros: " + libros.size());
     }
 
     private void mostrarDetallesLibroDTO(LibroDTO libro) {
-        System.out.println("\n📖 DETALLES DEL LIBRO");
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-        System.out.println("Título: " + (libro.getTitulo() != null ? libro.getTitulo() : "N/A"));
+        System.out.println("\n=== DETALLES DEL LIBRO ===");
+        System.out.println("Titulo: " + (libro.getTitulo() != null ? libro.getTitulo() : "N/A"));
         System.out.println("Idioma: " + (libro.getIdiomas() != null && !libro.getIdiomas().isEmpty() ? libro.getIdiomas().get(0) : "N/A"));
         System.out.println("Descargas: " + (libro.getNumeroDescargas() != null ? libro.getNumeroDescargas() : "N/A"));
         
@@ -231,10 +227,10 @@ public class LiterAluraApplication {
             libro.getAutores().forEach(a -> {
                 String nacimiento = a.getAnioNacimiento() != null ? a.getAnioNacimiento().toString() : "?";
                 String muerte = a.getAnioMuerte() != null ? a.getAnioMuerte().toString() : "Vivo";
-                System.out.println("  • " + (a.getNombre() != null ? a.getNombre() : "N/A") + 
+                System.out.println("  - " + (a.getNombre() != null ? a.getNombre() : "N/A") + 
                                  " (" + nacimiento + "-" + muerte + ")");
             });
         }
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("===========================");
     }
 }
