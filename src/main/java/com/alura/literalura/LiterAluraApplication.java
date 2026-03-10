@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import com.alura.literalura.repository.LibroRepository;
 import com.alura.literalura.repository.AutorRepository;
 import com.alura.literalura.service.ConsultaGutendex;
@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootApplication
+@EnableJpaRepositories(basePackages = "com.alura.literalura.repository")
 public class LiterAluraApplication {
 
     public static void main(String[] args) {
